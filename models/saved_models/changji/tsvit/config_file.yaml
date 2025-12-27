@@ -1,0 +1,71 @@
+CHECKPOINT:
+  eval_steps: 300
+  load_from_checkpoint: null
+  log_path: models/saved_models/PASTIS24/tsvit
+  partial_restore: false
+  save_path: ./models/saved_models/changji/tsvit
+  save_steps: 3000
+  train_metrics_steps: 200
+DATASETS:
+  eval:
+    base_dir: D:/2/data
+    batch_size: 4
+    bidir_input: false
+    dataset: PASTIS24_fold5
+    extra_data: null
+    label_map: null
+    max_seq_len: 21
+    num_workers: 0
+    paths: C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/qita/val.csv
+  test:
+    base_dir: D:/2/data
+    batch_size: 4
+    bidir_input: false
+    dataset: PASTIS24_fold5
+    extra_data: null
+    label_map: null
+    max_seq_len: 21
+    num_workers: 0
+    paths: C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/qita/test.csv
+  train:
+    base_dir: D:/2/data
+    batch_size: 4
+    bidir_input: false
+    dataset: PASTIS24_fold5
+    extra_data: null
+    label_map: null
+    max_seq_len: 21
+    num_workers: 0
+    paths: C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/qita/train.csv
+MODEL:
+  architecture: TSViT
+  dim: 64
+  dim_head: 16
+  dropout: 0.2
+  emb_dropout: 0.2
+  heads: 4
+  ignore_background: true
+  img_res: 64
+  max_seq_len: 21
+  num_channels: 21
+  num_classes: 4
+  num_features: 16
+  patch_size: 2
+  pool: cls
+  scale_dim: 4
+  spatial_depth: 4
+  temporal_depth: 4
+SOLVER:
+  loss_function: masked_cross_entropy
+  lr_base: 1e-3
+  lr_min: 5e-5
+  lr_scheduler: constant
+  lr_start: 1e-8
+  num_cycles: 4
+  num_epochs: 100
+  num_warmup_epochs: 10
+  reset_lr: true
+  steps: (0, 80000)
+  weight_decay: 0.001
+local_device_ids:
+- 0

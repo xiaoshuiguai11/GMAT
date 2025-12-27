@@ -1,0 +1,47 @@
+CHECKPOINT:
+  eval_steps: 4000
+  load_from_checkpoint: null
+  log_path: models/saved_models/PASTIS24/logs_UNet2D_CLSTM
+  partial_restore: false
+  save_path: models/saved_models/MTLCC/UNet2D_CLSTM
+  save_steps: 8000
+  train_metrics_steps: 2000
+DATASETS:
+  eval:
+    base_dir: C:/Users/Think/Desktop/flod1
+    batch_size: 4
+    bidir_input: false
+    dataset: PASTIS24_fold1
+    extra_data: null
+    max_seq_len: 60
+    num_workers: 0
+    paths: C:/Users/Think/Desktop/flod1/csv/val.csv
+  train:
+    base_dir: C:/Users/Think/Desktop/flod1
+    batch_size: 4
+    bidir_input: false
+    dataset: PASTIS24_fold1
+    extra_data: null
+    max_seq_len: 60
+    num_workers: 0
+    paths: C:/Users/Think/Desktop/flod1/csv/train.csv
+MODEL:
+  architecture: UNET2D-CLSTM
+  dropout: 0.2
+  img_res: 24
+  max_seq_len: 60
+  num_channels: 11
+  num_classes: 19
+  shape_pattern: NTHWC
+  train_stage: 2
+SOLVER:
+  class_weights: null
+  loss_function: masked_cross_entropy
+  lr_base: 0.0001
+  lr_decay: 0.975
+  lr_scheduler: constant
+  num_epochs: 100
+  reset_lr: true
+  reset_lr_at_epoch: 150
+local_device_ids:
+- 0

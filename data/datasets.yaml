@@ -1,0 +1,64 @@
+MTLCC:
+    basedir: "..."
+    paths_train: ".../240pkl/train_paths.csv"
+    paths_eval: ".../240pkl/eval_paths.csv"
+
+T31TFM_1618:
+    basedir: "C:/Users/vipuser/Documents/T31TFM_1618/T31TFM_1618"
+    paths_train: "C:/Users/vipuser/Documents/T31TFM_1618/T31TFM_1618/paths/train_paths.csv"
+    paths_eval: "C:/Users/vipuser/Documents/T31TFM_1618/T31TFM_1618/paths/eval_paths.csv"
+
+# PASTIS24 benchmark -------------------------------------------------------------------------------------------------
+PASTIS24_fold1:
+#    PASTIS24_fold1:
+    basedir: "C:/Users/vipuser/Desktop/flod1"
+    paths_train: "C:/Users/vipuser/Desktop/flod1/csv/train.csv"
+    paths_eval: "C:/Users/vipuser/Desktop/flod1/csv/val.csv"
+    paths_test: "C:/Users/vipuser/Desktop/flod1/csv/test.csv"
+
+PASTIS24_fold2:
+    basedir: ".../PASTIS24"
+    paths_train: ".../fold-paths/folds_2_234_paths.csv"
+    paths_eval: ".../fold-paths/fold_5_paths.csv"
+    paths_test: ".../fold-paths/fold_1_paths.csv"
+
+PASTIS24_fold3:
+    basedir: ".../PASTIS24"
+    paths_train: ".../fold-paths/folds_3_345_paths.csv"
+    paths_eval: ".../fold-paths/fold_1_paths.csv"
+    paths_test: ".../fold-paths/fold_2_paths.csv"
+
+PASTIS24_fold4:
+    basedir: ".../PASTIS24"
+    paths_train: ".../fold-paths/folds_4_451_paths.csv"
+    paths_eval: ".../fold-paths/fold_2_paths.csv"
+    paths_test: ".../fold-paths/fold_3_paths.csv"
+
+PASTIS24_fold5:
+
+    #16扩大
+#    basedir: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/total2"
+    basedir: "D:/data"
+#    paths_train: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/train_90.csv"
+##    paths_eval: "C:/Users/Think/Desktop/bq/auggment/16/csv/val.csv"
+#    paths_eval: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/val_90.csv"
+#    paths_test: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/test_90.csv"
+    #feature
+    paths_train: "D:/csv/train.csv"
+        #    paths_eval: "C:/Users/Think/Desktop/bq/auggment/16/csv/val.csv"
+    paths_eval: "D:/csv/val.csv"
+    paths_test: "D:/csv/test.csv"
+        #feature
+#    basedir: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/feature/total_date11"
+#    paths_train: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/feature/csv/train_feature.csv"
+##    paths_eval: "C:/Users/Think/Desktop/bq/auggment/16/csv/val.csv"
+#    paths_eval: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/feature/csv/val_feature.csv"
+#    paths_test: "C:/Users/Think/Desktop/bq/bq_new_new/kuochong_30/64/csv/test_90.csv"
+## ------------------------------------------------------------------------------------------------------------------
+
+PASTIS24_fold6:
+    #basedir: "C:/Users/Think/Desktop/PASTIS/PASTIS24/pickle24x24"
+    basedir: "G:/PASTIS/PASTIS_RUN"
+    paths_train: "G:/PASTIS/train.csv"
+    paths_eval: "G:/PASTIS/val.csv"
+    paths_test: "G:/PASTIS/test.csv"

@@ -1,0 +1,49 @@
+MODEL:
+  architecture: "UNET2D-CLSTM"
+  train_stage: 2
+  shape_pattern: 'NTHWC'
+  img_res: 64
+  max_seq_len: 21
+  num_channels: 21
+  num_features: 8
+  num_classes: 4
+  dropout: 0.2
+
+DATASETS:
+  train:
+    dataset: 'Changji'
+    max_seq_len: 21
+    batch_size: 4
+    extra_data:
+    num_workers: 0
+  eval:
+    dataset: 'Changji'
+    max_seq_len: 21
+    batch_size: 4
+    extra_data:
+    num_workers: 0
+  test:
+    dataset: 'Changji'
+    max_seq_len: 21
+    batch_size: 4
+    extra_data:
+    num_workers: 0
+SOLVER:
+  num_epochs: 100
+  loss_function: masked_cross_entropy
+  class_weights:
+  lr_scheduler: 'constant'
+  lr_base: 0.0001
+  lr_decay: 0.975
+  reset_lr: True   # resets lr to base value when loading pretrained model
+  reset_lr_at_epoch: 150
+
+CHECKPOINT:
+  load_from_checkpoint:
+  partial_restore: False
+  save_path: "D:/2/predict_Unet2D"
+
+  log_path: 'models/saved_models/changji/logs_changji_UNet2D_CLSTM'
+  train_metrics_steps: 2000
+  eval_steps: 4000
+  save_steps: 8000

@@ -1,0 +1,71 @@
+MODEL:
+  architecture:  "GMAT"
+  img_res: 64
+  max_seq_len: 21
+  num_channels: 21
+  num_features: 16
+  num_classes: 4
+  ignore_background: True
+  dropout: 0.2
+  patch_size: 2
+  dim: 64
+  temporal_depth: 4
+  spatial_depth: 4
+  heads: 4
+  pool: 'cls'
+  dim_head: 16
+  emb_dropout: 0.2
+  scale_dim: 4
+
+
+
+
+
+DATASETS:
+  train:
+    dataset: "Changji"
+    label_map:
+    max_seq_len: 21
+    batch_size: 4
+    extra_data:
+    num_workers: 0
+
+  eval:
+    dataset: "Changji"
+    label_map:
+    max_seq_len: 21
+    batch_size: 1
+    extra_data:
+    num_workers: 0
+
+  test:
+    dataset: "Changji"
+    label_map:
+    max_seq_len: 21
+    batch_size: 1
+    extra_data:
+    num_workers: 0
+
+SOLVER:
+  num_epochs: 100
+  num_warmup_epochs: 10
+  steps: (0, 80000)
+  loss_function:  masked_cross_entropy
+#  class_weights: [1.50, 14.70, 8.29, 6.85]
+  lr_scheduler: 'constant'
+  lr_base: 1e-3
+  lr_min: 5e-5
+  lr_start: 1e-8
+  num_cycles: 4
+  reset_lr: True   # resets lr to base value when loading pretrained model
+  weight_decay: 0.001
+
+CHECKPOINT:
+  load_from_checkpoint:
+  partial_restore: False
+  save_path: 'D:/2/tsvit_yuan'
+  log_path: 'models/saved_models/changji/GMAT'
+  train_metrics_steps: 200
+  eval_steps: 300
+  save_steps: 3000
+

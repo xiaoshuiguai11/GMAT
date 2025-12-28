@@ -29,71 +29,6 @@ class Transformer(nn.Module):
             x = ff(x) + x
         return self.norm(x)
 
-
-class STViT(nn.Module):
-    """
-    Spatial-Temporal ViT (used in ablation study, section 4.2)
-    """
-    def __init__(self, model_config):
-        super().__init__()
-        self.image_size = model_config['img_res']
-        self.patch_size = model_config['patch_size']
-        self.num_patches_1d = self.image_size//self.patch_size
-        self.num_classes = model_config['num_classes']
-        self.num_frames = model_config['max_seq_len']
-        self.dim = model_config['dim']
-        self.depth = model_config['depth']
-        self.heads = model_config['heads']
-        self.dim_head = model_config['dim_head']
-        self.dropout = model_config['dropout']
-        self.emb_dropout = model_config['emb_dropout']
-        self.pool = model_config['pool']
-        self.scale_dim = model_config['scale_dim']
-        assert self.pool in {'cls', 'mean'}, 'pool type must be either cls (cls token) or mean (mean pooling)'
-        assert self.image_size % self.patch_size == 0, 'Image dimensions must be divisible by the patch size.'
-        num_patches = self.num_patches_1d ** 2
-        patch_dim = model_config['num_channels'] * self.patch_size ** 2
-        self.to_patch_embedding = nn.Sequential(
-            Rearrange('b t c (h p1) (w p2) -> b t (h w) (p1 p2 c)', p1=self.patch_size, p2=self.patch_size),
-            nn.Linear(patch_dim, self.dim))
-        self.pos_embedding = nn.Parameter(torch.randn(1, self.num_frames, num_patches, self.dim))
-        print('pos embedding: ', self.pos_embedding.shape)
-        self.space_token = nn.Parameter(torch.randn(1, 1, self.dim))
-        print('space token: ', self.space_token.shape)
-        self.space_transformer = Transformer(self.dim, self.depth, self.heads, self.dim_head, self.dim * self.scale_dim, self.dropout)
-        self.temporal_token = nn.Parameter(torch.randn(1, 1, self.dim))
-        print('temporal token: ', self.temporal_token.shape)
-        self.temporal_transformer = Transformer(self.dim, self.depth, self.heads, self.dim_head, self.dim * self.scale_dim, self.dropout)
-        self.dropout = nn.Dropout(self.emb_dropout)
-        self.mlp_head = nn.Sequential(
-            nn.LayerNorm(self.dim),
-            nn.Linear(self.dim, self.num_classes * self.patch_size**2))
-
-    def forward(self, x):
-        x = x.permute(0, 1, 4, 2, 3)
-        B, T, C, H, W = x.shape
-        x = self.to_patch_embedding(x)
-        b, t, n, _ = x.shape
-        x += self.pos_embedding#[:, :, :(n + 1)]
-        x = rearrange(x, 'b t n d -> (b t) n d')
-        x = self.space_transformer(x)
-        x = rearrange(x, '(b t) ... -> b t ...', b=b)  # use only space token, location 0
-        cls_temporal_tokens = repeat(self.temporal_token, '() () d -> b t k d', b=b, t=1, k=self.num_patches_1d**2)
-        x = torch.cat((cls_temporal_tokens, x), dim=1)
-        x = x.permute(0, 2, 1, 3)
-        x = x.reshape(b * self.num_patches_1d**2, self.num_frames+1, self.dim)
-        x = self.temporal_transformer(x)
-        x = x.mean(dim=1) if self.pool == 'mean' else x[:, 0]
-        x = self.mlp_head(x)
-        x = x.reshape(B, self.num_patches_1d**2, self.patch_size**2, self.num_classes)
-        x = x.reshape(B, H*W, self.num_classes)
-        x = x.reshape(B, H, W, self.num_classes)
-        x = x.permute(0, 3, 1, 2)
-        return x
-
-
-
-
 class GMAT(nn.Module):
 
     def __init__(self, model_config):
@@ -131,10 +66,6 @@ class GMAT(nn.Module):
         self.to_temporal_embedding_input = nn.Linear(366, self.dim)
         self.temporal_token = nn.Parameter(torch.randn(1, self.num_classes, self.dim))
 
-        # self.temporal_transformer = Transformer(
-        #     self.dim, self.temporal_depth, self.heads, self.dim_head,
-        #     self.dim * self.scale_dim, self.dropout, use_bn=False, use_dyt=False
-        # )
         #
         self.temporal_transformer = EnhancedAdaptiveFusionTransformer(
             dim=self.dim,
@@ -147,12 +78,6 @@ class GMAT(nn.Module):
 
         self.space_pos_embedding = nn.Parameter(torch.randn(1, num_patches, self.dim))
 
-
-        # self.space_transformer = Transformer(self.dim, self.spatial_depth, self.heads, self.dim_head, self.dim * self.scale_dim, self.dropout)
-        # self.space_transformer = Transformer(
-        #     self.dim, self.spatial_depth, self.heads, self.dim_head,
-        #     self.dim * self.scale_dim, self.dropout, use_bn=False, use_dyt=False
-        # )
 
         self.space_transformer = EnhancedAdaptiveFusionTransformer(
             dim=self.dim,

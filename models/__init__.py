@@ -2,8 +2,8 @@ from models.UNet3D.unet3d import UNet3D
 from models.UNet3D.unet3df import UNet3D_CSCL
 from models.CropTypeMapping.models import FCN_CRNN
 from models.BiConvRNN.biconv_rnn import BiRNNSequentialEncoder
-from models.TSViT.TSViTdense import TSViT
-# from models.TSViT.TSViTcls import TSViTcls
+from models.GMAT.gmat import GMAT
+
 
 def get_model(config, device):
     model_config = config['MODEL']
@@ -20,12 +20,8 @@ def get_model(config, device):
     if model_config['architecture'] == "ConvBiRNN":
         return BiRNNSequentialEncoder(model_config, device).to(device)
 
-    if model_config['architecture'] == "TSViTcls":
-        model_config['device'] = device
-        return TSViTcls(model_config).to(device)
-
-    if model_config['architecture'] == "TSViT":
-        return TSViT(model_config).to(device)
+    if model_config['architecture'] == "GMAT":
+        return GMAT(model_config).to(device)
 
     else:
         raise NameError("Model architecture %s not found, choose from: 'UNET3D', 'UNET3Df', 'UNET2D-CLSTM', 'TSViT', 'TSViTcls'")

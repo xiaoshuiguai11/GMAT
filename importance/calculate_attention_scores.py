@@ -32,7 +32,7 @@ plt.style.use('seaborn-whitegrid')
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 
-CFG_PATH = r"C:\Users\Think\Desktop\DeepSatModels-main\configs\PASTIS24\TSViT_fold5.yaml"
+CFG_PATH = r"C:\Users\Think\Desktop\GMAT\configs\PASTIS24\TSViT_fold5.yaml"
 WEIGHTS_PATH = r"C:\Users\Think\Desktop\模型\logs\门控自适应\best.pth"
 SAVE_DIR = r"C:\Users\Think\Desktop\attention_analysis"
 PICKLE_FILE = r"C:\Users\Think\Desktop\bq\bq_new_new\kuochong_30\64\total2\20369_1_0.pickle"
@@ -676,3 +676,4 @@ def main():
 if __name__ == "__main__":
 
     main()
+

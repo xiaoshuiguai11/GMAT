@@ -1,8 +1,12 @@
 import os
 import numpy as np
 from osgeo import gdal
+from scipy.ndimage import rotate
+import numpy as np
+import cv2
+import numpy as np
 
-# ✅ 设置输入路径和输出路径
+
 input_root = r"C:\Users\Think\Desktop\bq\bq_new_new\raster"                 # 原始影像路径
 output_root = r"C:\Users\Think\Desktop\bq\bq_new_new\kuochong_90\data\raster"      # 增强结果保存路径
 
@@ -29,46 +33,6 @@ def write_single_band_tif(array, ref_dataset, out_path):
     out_band.WriteArray(array)
     out_band.FlushCache()
     out_dataset = None
-
-
-from scipy.ndimage import rotate
-
-
-# def image_augmentation(img, angles=[90,180,270]):
-#     """
-#     图像增强函数，支持任意角度旋转
-#     参数：
-#         img: 输入图像数组 (H, W) 或 (H, W, C)
-#         angles: 需要增强的旋转角度列表（单位：度）
-#     """
-#     augmented = []
-#
-#     # 基本翻转
-#     augmented.append(np.flip(img, axis=1))  # 水平翻转
-#     augmented.append(np.flip(img, axis=0))  # 垂直翻转
-#     augmented.append(np.flip(np.flip(img, axis=1), axis=0))  # 水平垂直翻转
-#
-#     # 多角度旋转（使用最近邻插值保持离散值）
-#     for angle in angles:
-#         # 保持图像尺寸不变（reshape=False）
-#         # 使用最近邻插值（order=0）保持类别完整性
-#         # 填充值设为-1（可根据实际情况修改）
-#         rotated = rotate(img,
-#                          angle,
-#                          reshape=False,
-#                          order=0,
-#                          mode='constant',
-#                          cval=-1)
-#         augmented.append(rotated)
-#
-#     return augmented
-
-
-import numpy as np
-
-
-import cv2
-import numpy as np
 
 
 def image_augmentation(img):
@@ -176,3 +140,4 @@ def process_raster_folder(input_root, output_root):
 
 if __name__ == "__main__":
     process_raster_folder(input_root, output_root)
+

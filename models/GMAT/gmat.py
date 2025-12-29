@@ -3,7 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
-from models.TSViT.module import Attention, PreNorm, FeedForward,DyT,EnhancedAdaptiveFusionTransformer
+from models.GMAT.module  models.g'm.module import Attention, PreNorm, FeedForwar
 import numpy as np
 from utils.config_files_utils import get_params_values
 from KNN.efficient_kan.kan import KANLinear

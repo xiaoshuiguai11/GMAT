@@ -3,11 +3,11 @@ from torch import nn
 import torch.nn.functional as F
 from einops import rearrange, repeat
 from einops.layers.torch import Rearrange
-from models.GMAT.module  models.g'm.module import Attention, PreNorm, FeedForwar
+from models.GMAT.module import Attention, PreNorm, FeedForward,DyT,EnhancedAdaptiveFusionTransformer
 import numpy as np
 from utils.config_files_utils import get_params_values
 from KNN.efficient_kan.kan import KANLinear
-from models.TSViT.simple_Mamba import MambaBlock
+from models.GMAT.simple_Mamba import MambaBlock
 class Transformer(nn.Module):
     def __init__(self, dim, depth, heads, dim_head, mlp_dim, dropout=0., use_bn=False, use_dyt=False):
         super().__init__()
